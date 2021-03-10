@@ -1,17 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class movcubo : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] GameObject cesta;
     private bool quitarCesta = false;
+    
+
+    [SerializeField] Text recogidos;
+
+    
+    int nrecogidos = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         cesta.SetActive(quitarCesta);
+
+        
+        recogidos = GetComponent<Text>();
+
+
     }
 
     // Update is called once per frame
@@ -26,6 +38,9 @@ public class movcubo : MonoBehaviour
         Cesta();
 
         
+        recogidos.text = "huevos recogidos: " + nrecogidos;
+
+
     }
     //activar con el boton la cesta
     void Cesta()
@@ -69,6 +84,14 @@ public class movcubo : MonoBehaviour
         //Space.World es lo que hace que la nave gire entorno a su eje al realizar los giros
         transform.Translate(Vector3.left * Time.deltaTime * moveSpeed * desplX);
         transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed * desplZ);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "huevo")
+        {
+            nrecogidos += 1;
+        }
     }
 
 }
