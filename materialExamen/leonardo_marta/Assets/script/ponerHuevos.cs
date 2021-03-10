@@ -5,26 +5,27 @@ using UnityEngine;
 public class ponerHuevos : MonoBehaviour
 {
     [SerializeField] GameObject huevo;
-    float interval = 10f;
-    public float speed = 3f;
+    float interval = 1f;
+    public float speed = 10f;
     private float randomNumber;
     private Vector3 RandomPos;
-    private Transform InitPos;
+    [SerializeField] Transform InitPos;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        MasHuevos();
         //Lanzo la corrutina 
 
         StartCoroutine("InstaHuevo");
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        interval -= speed * Time.deltaTime;
+       // interval -= speed * Time.deltaTime;
     }
     IEnumerator InstaHuevo()
     {
@@ -36,4 +37,14 @@ public class ponerHuevos : MonoBehaviour
         yield return new WaitForSeconds(interval);
     }
 
+    IEnumerator MasHuevos()
+    {
+        //Bucle infinito 
+        for  (int n = 0; ;n ++ )
+        {
+            InstaHuevo();
+            yield return null;
+        }
+
+    }
 }
